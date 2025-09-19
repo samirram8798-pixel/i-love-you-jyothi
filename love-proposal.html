@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Proposal 💖</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: pink;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 2em;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+            position: relative;
+        }
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            position: absolute;
+            max-width: calc(100vw - 100px);
+            max-height: calc(100vh - 50px);
+        }
+        #result {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        #result.show {
+            display: flex;
+            opacity: 1;
+        }
+        #result img {
+            width: 220px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        #result p {
+            font-size: 24px;
+            color: #d63384;
+            font-weight: bold;
+        }
+        .heart, .petal {
+            position: absolute;
+            z-index: 1;
+            animation: floatUp 6s linear forwards;
+            font-size: 24px;
+        }
+        .heart {
+            color: red;
+        }
+        .petal {
+            color: #ff4d6d;
+        }
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="questionBox">
+        <h1>Do you love me? 💕</h1>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+
+    <div id="result">
+        <!-- Replace the src below with your image file (keep it in same folder as this HTML) -->
+        <img src="JYOTI.jpg" alt="Cute Couple">
+        <p>Love you a lot Jyothi 😘❤️</p>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const questionBox = document.getElementById("questionBox");
+        const result = document.getElementById("result");
+        const music = document.getElementById("bgMusic");
+
+        let escapeSpeed = 1;
+        let hoverCount = 0;
+
+        yesBtn.addEventListener("click", () => {
+            questionBox.style.display = "none";
+            result.classList.add("show");
+            startHearts();
+            startPetals();
+            music.play();
+        });
+
+        noBtn.addEventListener("mouseover", () => {
+            hoverCount++;
+            escapeSpeed += 0.4;
+
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth) * escapeSpeed % (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight) * escapeSpeed % (window.innerHeight - noBtn.offsetHeight);
+
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            const scale = Math.max(1 - hoverCount * 0.1, 0.1);
+            const opacity = Math.max(1 - hoverCount * 0.15, 0);
+
+            noBtn.style.transform = `scale(${scale})`;
+            noBtn.style.opacity = opacity;
+
+            if (hoverCount > 6) {
+                noBtn.style.display = "none";
+            }
+        });
+
+        function startHearts() {
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.textContent = "❤️";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = Math.random() * 20 + 20 + "px";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 400);
+        }
+
+        function startPetals() {
+            setInterval(() => {
+                const petal = document.createElement("div");
+                petal.classList.add("petal");
+                petal.textContent = "🌹";
+                petal.style.left = Math.random() * 100 + "vw";
+                petal.style.fontSize = Math.random() * 20 + 20 + "px";
+                document.body.appendChild(petal);
+                setTimeout(() => petal.remove(), 6000);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
